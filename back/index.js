@@ -23,7 +23,7 @@ app.get('/employees', (req, res) => {
     });
 });
 
-app.post('/create', (req, res) => {
+app.post('/employees/create', (req, res) => {
     const name = req.body.name;
     const age = req.body.age;
     const country = req.body.country;
@@ -42,7 +42,7 @@ app.post('/create', (req, res) => {
     );
 });
 
-app.put('/update', (req, res) => {
+app.put('/employees/update', (req, res) => {
     const id = req.body.id;
     const wage = req.body.wage;
     db.query("UPDATE employees SET wage = ? WHERE id = ?",
@@ -55,7 +55,7 @@ app.put('/update', (req, res) => {
         })
 })
 
-app.delete('/delete/:id', (req, res) => {
+app.delete('/employees/delete/:id', (req, res) => {
     const id = req.params.id;
     db.query("DELETE FROM employees WHERE id = ?", id, (err, result) => {
         if (err) {
