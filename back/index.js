@@ -110,6 +110,15 @@ app.get('/roomFee', (req, res) => {
         });
 });
 
+app.get('/showRooms', (req, res) => {
+    db.query("SELECT * FROM rooms", (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
 
 app.listen('3001', () => {
     console.log('Server is running on port 3001')
