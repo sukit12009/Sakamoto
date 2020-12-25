@@ -11,7 +11,7 @@ export default function Rooms() {
                 แสดงห้องแถว
             </button>
             <button onClick={() =>
-                navigate(`/showRooms`)
+                navigate(`/showMonth`)
             }>
                 แสดงเดือนค่าห้องปัจจุบัน
             </button>

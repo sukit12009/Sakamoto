@@ -120,6 +120,20 @@ app.get('/showRooms', (req, res) => {
     });
 });
 
+app.get('/result', (req, res) => {
+    const day = new Date(req.query.day);
+
+    const year = day.getFullYear();
+    const month = day.getMonth();
+
+    function test(value) {
+        return value + 1 > 9 ? "" + (value + 1) : "0" + (value + 1);
+    }
+
+    console.log("year ", year+543);
+    console.log("month ",typeof test(month));
+})
+
 app.listen('3001', () => {
     console.log('Server is running on port 3001')
 })

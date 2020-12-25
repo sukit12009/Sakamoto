@@ -6,6 +6,7 @@ import RoomFee from "./page/roomFee";
 import ShowRooms from "./page/rooms/showRooms";
 import Rooms from "./page/rooms";
 import AddRoom from "./page/rooms/addRoom";
+import ShowMonth from "./page/rooms/showFeeMonth";
 
 class App extends Component {
   render() {
@@ -18,6 +19,7 @@ class App extends Component {
           <Route path="/" component={Rooms} />
           <Route path="/addRoom" component={AddRoom} />
           <Route path="/showRooms" component={ShowRooms} />
+          <Route path="/showMonth" component={ShowMonth} />
         </Router>
       </div>
     )
