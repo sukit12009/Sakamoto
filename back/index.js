@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+const { error } = require('console');
 
 app.use(cors());
 app.use(express.json())
@@ -120,18 +121,47 @@ app.get('/showRooms', (req, res) => {
     });
 });
 
+app.post('/addRoom', (req, res) => {
+    const name = req.body.name;
+    const feeRoom = req.body.feeRoom;
+    const feeBin = req.body.feeBin;
+    db.query(
+        "INSERT INTO rooms (room_name, fee_room, fee_bin) VALUES(?,?,?)",
+        [name, feeRoom, feeBin],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("Values inserted");
+            }
+        }
+    );
+});
+
 app.get('/result', (req, res) => {
     const day = new Date(req.query.day);
 
-    const year = day.getFullYear();
-    const month = day.getMonth();
-
-    function test(value) {
+    function getFormatMonth(value) {
         return value + 1 > 9 ? "" + (value + 1) : "0" + (value + 1);
-    }
+    };
 
-    console.log("year ", year+543);
-    console.log("month ",typeof test(month));
+    const month = getFormatMonth(day.getMonth());
+    const year = String(Number(day.getFullYear()));
+
+    db.query(`
+        SELECT * FROM months 
+        WHERE MONTH(date) = ?
+        AND YEAR(date) = ?
+    `,
+        [month, year],
+        (err, result) => {
+            if (err) {
+                console.log("err", err);
+            } else {
+                res.send(result);
+            }
+        }
+    )
 })
 
 app.listen('3001', () => {
