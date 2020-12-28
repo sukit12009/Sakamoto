@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
-const { error } = require('console');
 
 app.use(cors());
 app.use(express.json())
@@ -147,11 +146,27 @@ app.get('/result', (req, res) => {
 
     const month = getFormatMonth(day.getMonth());
     const year = String(Number(day.getFullYear()));
-
+    //  SELECT * FROM result_total
+    //         WHERE MONTH(date) = ?
+    //         AND YEAR(date) = ?
     db.query(`
-        SELECT * FROM months 
-        WHERE MONTH(date) = ?
-        AND YEAR(date) = ?
+        SELECT result_total.fee_fire, 
+        result_total.fee_water,
+        result_total.fee_bin,
+        result_total.fee_room,
+        rooms.room_name,
+        result_total.total,
+        result_total.date,
+        result_total.unit_fire_before,
+        result_total.unit_water_before,
+        result_total.unit_fire_after,
+        result_total.unit_water_after,
+        result_total.different_unit_fire,
+        result_total.different_unit_water
+        
+        FROM result_total INNER JOIN rooms ON result_total.room_id = rooms.room_id
+               WHERE MONTH(date) = ?
+               AND YEAR(date) = ?
     `,
         [month, year],
         (err, result) => {
